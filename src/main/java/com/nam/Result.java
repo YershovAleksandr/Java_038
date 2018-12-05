@@ -8,8 +8,7 @@ public class Result {
     private final List<String> addedPages = new ArrayList<>();
     private final List<String> changedPages = new ArrayList<>();
 
-    public Result(){
-    }
+//    public Result(){}
 
     public List<String> getRemovedPages() {
         return removedPages;

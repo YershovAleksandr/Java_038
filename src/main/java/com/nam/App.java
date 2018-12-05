@@ -8,9 +8,26 @@ import java.util.*;
  */
 public class App 
 {
+    private static Data data;
+    private static Result result;
+
     public static void main( String[] args )
     {
+        Application application = new Application();
+
+
+        data = application.init(args);
+
+        result = new Result();
+
+        application.process(data, result);
+
+        application.sendMail(result);
+
+
         System.out.println( "Hello World Softaria!" );
+
+        System.exit(0);
 
         //todo fix this shit
         Hashtable<String, String> yesterday = new Hashtable<>();
