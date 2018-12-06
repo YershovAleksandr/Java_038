@@ -3,6 +3,7 @@ package com.nam;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -13,14 +14,11 @@ import java.util.Set;
 public class Application {
     private String mailto;
 
-    public Application(){
-    }
-
-    public void setMailto(String mailto) {
-        this.mailto = mailto;
-    }
-
     public Data init() throws Exception{
+
+        Properties prp = new Properties();
+        prp.load(new FileInputStream("src/main/resources/config.properties"));
+        mailto = prp.getProperty("app.mailto");
 
         Data data = new Data();
 
