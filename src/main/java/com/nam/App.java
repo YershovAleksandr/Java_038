@@ -19,7 +19,7 @@ public class App {
 
         data = application.init(args);
         result = application.process(data);
-        application.sendMail(result);
+        //application.sendMail(result);
     }
 /*
     private static void checkMail(String str){
