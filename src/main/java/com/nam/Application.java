@@ -80,8 +80,8 @@ public class Application {
     public void sendMail(Result result){
         System.out.println("Sending mail to: " + mailto + "\n" + result.toString());
 
-        String from = "softtest42@74.ru";
-        String host = "smtp.yandex.ru";
+        String from = "*****";
+        String host = "****";
 
         Properties properties = new Properties();
         properties.put("mail.smtp.host", host);
@@ -92,7 +92,7 @@ public class Application {
         Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator(){
             @Override
             protected PasswordAuthentication getPasswordAuthentication(){
-                return new PasswordAuthentication(from, "softaria");
+                return new PasswordAuthentication(from, "****");
             }
         });
 
