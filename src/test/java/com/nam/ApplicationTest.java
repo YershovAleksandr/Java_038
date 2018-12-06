@@ -16,7 +16,6 @@ public class ApplicationTest {
     @Before
     public void setUp(){
         data = new Data();
-        //result = null;
         application = new Application();
     }
 
