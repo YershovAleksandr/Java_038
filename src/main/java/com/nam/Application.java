@@ -5,6 +5,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDate;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Application {
@@ -18,21 +19,28 @@ public class Application {
 
         Data data = new Data();
 
-        /*data.getTodayTable().put("1", "1001");
-        data.getTodayTable().put("2", "1002");
-        data.getTodayTable().put("3", "1003");
-        data.getTodayTable().put("4", "1004");
-        data.getTodayTable().put("5", "1005");
-        data.getTodayTable().put("6", "1006");
-        data.getTodayTable().put("7", "1007");
+        Scanner in = new Scanner(System.in);
 
-        data.getYesterdayTable().put("1", "2001");
-        data.getYesterdayTable().put("2", "1002");
-        data.getYesterdayTable().put("3", "2003");
-        data.getYesterdayTable().put("4", "1004");
-        data.getYesterdayTable().put("5", "2005");
-        data.getYesterdayTable().put("6", "1006");
-        data.getYesterdayTable().put("8", "2008");*/
+        System.out.println("Enter recipient's email: ");
+        data.setEmail(in.next());
+
+        System.out.println("Enter count of yesterday's pages");
+        int yesterdayN = in.nextInt();
+
+        System.out.println("Enter Url & content");
+
+        for (int i = 0; i < yesterdayN; i++){
+            data.getYesterdayTable().put(in.next(), in.next());
+        }
+
+        System.out.println("Enter count of today's pages");
+        int todayN = in.nextInt();
+
+        System.out.println("Enter Url & content");
+
+        for (int i = 0; i < todayN; i++){
+            data.getTodayTable().put(in.next(), in.next());
+        }
 
         System.out.println("Yesterday:\n" + data.getYesterdayTable().toString());
         System.out.println("Today:\n" + data.getTodayTable().toString());
@@ -73,6 +81,7 @@ public class Application {
         System.out.println(result.toString());
 
         String to = "alebed42@74.ru";
+        //String to = "asdasdasdasdas@dsfsdf";
         //String to = "namstudionsk@gmail.com";
         String from = "alebed42@74.ru";
         String host = "smtp.yandex.ru";

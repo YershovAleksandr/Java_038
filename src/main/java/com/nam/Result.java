@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Result {
-    private final List<String> removedPages = new ArrayList<>();
-    private final List<String> addedPages = new ArrayList<>();
-    private final List<String> changedPages = new ArrayList<>();
+    private List<String> removedPages = new ArrayList<>();
+    private List<String> addedPages = new ArrayList<>();
+    private List<String> changedPages = new ArrayList<>();
 
 //    public Result(){}
 
