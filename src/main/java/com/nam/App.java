@@ -1,18 +1,32 @@
 package com.nam;
 
-import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import java.util.Properties;
+import java.util.Random;
 
 /**
  * Hello world!
  *
  */
-public class App 
-{
+public class App {
     private static Data data;
     private static Result result;
 
-    public static void main( String[] args )
-    {
+    public static void main(String[] args) {
+        System.out.println("Hello World Softaria!");
+
+        Random rnd = new Random();
+        String str = "Fuck you!" + rnd.nextInt();
+
+        //sendMail(str);
+
+      //  checkMail(str);
+
+        //System.exit(0);
+
         Application application = new Application();
 
 
@@ -24,146 +38,105 @@ public class App
 
         application.sendMail(result);
 
-
-        System.out.println( "Hello World Softaria!" );
-
-        System.exit(0);
-
-        //todo fix this shit
-        Hashtable<String, String> yesterday = new Hashtable<>();
-        Hashtable<String, String> today = new Hashtable<>();
-
-        setHashTable(yesterday, 1);
-        setHashTable(today, 2);
-
-        System.out.println("Yesterday");
-        printHashTable(yesterday);
-        System.out.println("Today");
-        printHashTable(today);
-        System.out.println("CheckTables");
-        checkTables(yesterday, today);
-
-/*        Hashtable<String, String> tables = new Hashtable<>();
-
-        tables.put("1", "1001");
-        tables.put("2", "1002");
-        tables.put("3", "1003");
-        tables.put("4", "1004");
-        tables.put("5", "1005");
-
-        String str = tables.get("2");
-
-        if (str != null){
-            System.out.println("Value of key 2 is: " + str);
-        }
-
-        Set<String> keys = tables.keySet();
-
-        Iterator<String> it = keys.iterator();
-
-        while(it.hasNext()){
-
-            String s = it.next();
-
-            System.out.println("Key: " + s + " Value: " + tables.get(s));
-        }
-
-        System.out.println("!!!!");
-
-        for (String key : keys){
-            System.out.println("Key: " + key + " Value: " + tables.get(key));
-        }
-*/
     }
 
-    static void setHashTable(Hashtable<String, String> tab, int t){
-        //todo fix this shit
-        //Hashtable<String, String> tab = new Hashtable<>();
+    private static void sendMail(String str){
+// Recipient's email ID needs to be mentioned.
+        String to = "alebed42@74.ru";
 
-        if (t == 1) {
-            tab.put("1", "1001");
-            tab.put("2", "1002");
-            tab.put("3", "1003");
-            tab.put("4", "1004");
-            tab.put("5", "1005");
-            tab.put("6", "1006");
-            tab.put("7", "1007");
-        } else {
-            tab.put("1", "2001");
-            tab.put("2", "1002");
-            tab.put("3", "2003");
-            tab.put("4", "1004");
-            tab.put("5", "2005");
-            tab.put("6", "1006");
-            tab.put("8", "2008");
-        }
+        // Sender's email ID needs to be mentioned
+        String from = "alebed42@74.ru";
 
-        //table = tab;
+        // Assuming you are sending email from localhost
+        String host = "smtp.yandex.ru";
 
-        //printHashTable(table);
-    }
+        int port = 465;
 
-    static void printHashTable(Hashtable<String, String> table){
-        Set<String> keys = table.keySet();
+        // Get system properties
+        Properties properties = new Properties();
 
-        for (String key: keys){
-            System.out.println("Key: " + key + " Value:" + table.get(key));
-        }
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.debug", "true");
+        //properties.put("mail.user", "alebede42@74.ru");
+        //properties.put("mail.password", "0fsdabmh");
 
-        //System.out.println(table.toString());
-    }
-
-    static void checkTables(Hashtable<String, String> yesterday, Hashtable<String, String> today){
-
-        List<String> changeKeys = new ArrayList<>();
-        List<String> removeKeys = new ArrayList<>();
-        List<String> addKeys = new ArrayList<>();
-
-        Set<String> keys = yesterday.keySet();
-
-        System.out.println("Yesterday:");
-        for (String key: keys){
-            //System.out.println("Key: " + key + " Value:" + yesterday.get(key));
-
-            if (today.containsKey(key)){ //exist key
-                if (!today.get(key).equals(yesterday.get(key))){ //modification value
-                    System.out.println("CHANGE Key: " + key + " Old Value: " + yesterday.get(key) + " New value: " + today.get(key));
-                    changeKeys.add(key);
-                }
-            } else { //not exist key
-                System.out.println("REMOVE key: " + key);
-                removeKeys.add(key);
+        // Get the default Session object.
+        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator(){
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication("alebed42@74.ru", "ofsdabmh");
             }
+        });
+
+        try {
+            // Create a default MimeMessage object.
+            MimeMessage message = new MimeMessage(session);
+
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress(from));
+
+            // Set To: header field of the header.
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+            // Set Subject: header field
+
+
+            message.setSubject(str);
+
+            // Now set the actual message
+            message.setText(str);
+
+            // Send message
+            Transport.send(message);
+            System.out.println("Sent message successfully....");
+
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
         }
 
-        if (removeKeys.size() + today.size() > yesterday.size()){
+    }
 
-            Set<String> todayKeys = today.keySet();
+    private static void checkMail(String str){
+        final String user = "alebed42@74.ru"; // имя пользователя
+        final String pass = "ofsdabmh";    // пароль
+        final String host = "imap.yandex.ru";     // адрес почтового сервера
 
-            for (String key: todayKeys){
-                if (!yesterday.containsKey(key)){
-                    System.out.println("ADD Key: " + key);
+        // Создание свойств
+        Properties props = new Properties();
 
-                    addKeys.add(key);
-                }
-            }
+        //включение debug-режима
+        props.put("mail.debug", "true");
+
+        //Указываем протокол - IMAP с SSL
+        props.put("mail.store.protocol", "imaps");
+        Session session = Session.getInstance(props);
+        try {
+            Store store = session.getStore();
+
+            //подключаемся к почтовому серверу
+            store.connect(host, user, pass);
+
+            //получаем папку с входящими сообщениями
+            Folder inbox = store.getFolder("INBOX");
+
+            //открываем её только для чтения
+            inbox.open(Folder.READ_ONLY);
+
+            //получаем последнее сообщение (самое старое будет под номером 1)
+            Message m = inbox.getMessage(inbox.getMessageCount());
+
+            //m.getSubject();
+            //Multipart mp = (Multipart) m.getContent();
+            //BodyPart bp = mp.getBodyPart(0);
+
+            //Выводим содержимое на экран
+            //System.out.println(bp.getContent());
+            System.out.println("\n~" + m.getContent().toString() + "~");
+
+        }catch(Exception ex){
+            ex.printStackTrace();
         }
-
-        System.out.println("Change " + changeKeys.size() + " values\n" + changeKeys.toString());
-        for(String s : changeKeys){
-            System.out.println("Key: " + s);
-        }
-
-        System.out.println("Remove " + removeKeys.size() + " values\n" + removeKeys.toString());
-        for(String s : removeKeys){
-            System.out.println("Key: " + s);
-        }
-
-        System.out.println("Add " + addKeys.size() + " values\n" + addKeys.toString());
-        for(String s : addKeys){
-            System.out.println("Key: " + s);
-        }
-
-
     }
 }

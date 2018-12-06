@@ -1,5 +1,10 @@
 package com.nam;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.time.LocalDate;
+import java.util.Properties;
 import java.util.Set;
 
 public class Application {
@@ -62,5 +67,39 @@ public class Application {
 
     public void sendMail(Result result){
         System.out.println(result.toString());
+
+        String to = "alebed42@74.ru";
+        //String to = "namstudionsk@gmail.com";
+        String from = "alebed42@74.ru";
+        String host = "smtp.yandex.ru";
+
+        Properties properties = new Properties();
+
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.debug", "true");
+
+        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator(){
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication("alebed42@74.ru", "ofsdabmh");
+            }
+        });
+
+        try {
+            MimeMessage message = new MimeMessage(session);
+
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject(LocalDate.now().toString());
+            message.setText(result.toString());
+
+            Transport.send(message);
+            System.out.println("Sent message successfully....");
+
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
     }
 }
