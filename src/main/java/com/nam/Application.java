@@ -19,7 +19,13 @@ public class Application {
 
         Data data = new Data();
 
-        Scanner in = new Scanner(System.in);
+        for (String str : args){
+            if (str.equals("-y")){
+
+            }
+        }
+
+        /*Scanner in = new Scanner(System.in);
 
         System.out.println("Enter recipient's email: ");
         data.setEmail(in.next());
@@ -41,7 +47,7 @@ public class Application {
         for (int i = 0; i < todayN; i++){
             data.getTodayTable().put(in.next(), in.next());
         }
-
+*/
         System.out.println("Yesterday:\n" + data.getYesterdayTable().toString());
         System.out.println("Today:\n" + data.getTodayTable().toString());
 
