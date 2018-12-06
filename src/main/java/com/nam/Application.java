@@ -3,6 +3,11 @@ package com.nam;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Properties;
 import java.util.Scanner;
@@ -15,41 +20,49 @@ public class Application {
     public Application(){
     }
 
-    public Data init(String[] args){
+    public Data init(String[] args) throws Exception{
 
         Data data = new Data();
 
-        for (String str : args){
-            if (str.equals("-y")){
+        FileInputStream fis;
+        Properties prp = new Properties();
 
-            }
+        try{
+            fis = new FileInputStream("src/main/resources/config.properties");
+
+            prp.load(fis);
+
+            String str = prp.getProperty("app.email", "defa");
+            data.setEmail(str);
+
+            System.out.println("Email " + str);
+
+        } catch(IOException e){
+            e.printStackTrace();
         }
 
-        /*Scanner in = new Scanner(System.in);
-
-        System.out.println("Enter recipient's email: ");
-        data.setEmail(in.next());
+        Scanner in = new Scanner(System.in);
 
         System.out.println("Enter count of yesterday's pages");
         int yesterdayN = in.nextInt();
 
-        System.out.println("Enter Url & content");
+        System.out.println("Enter Url & file with content");
 
         for (int i = 0; i < yesterdayN; i++){
-            data.getYesterdayTable().put(in.next(), in.next());
+            data.getYesterdayTable().put(in.next(), new String(Files.readAllBytes(Paths.get(in.next()))));
         }
 
         System.out.println("Enter count of today's pages");
         int todayN = in.nextInt();
 
-        System.out.println("Enter Url & content");
+        System.out.println("Enter Url & file with content");
 
         for (int i = 0; i < todayN; i++){
-            data.getTodayTable().put(in.next(), in.next());
+            data.getTodayTable().put(in.next(), new String(Files.readAllBytes(Paths.get(in.next()))));
         }
-*/
-        System.out.println("Yesterday:\n" + data.getYesterdayTable().toString());
-        System.out.println("Today:\n" + data.getTodayTable().toString());
+
+        System.out.println("Yesterday size:\n" + data.getYesterdayTable().size());
+        System.out.println("Today size:\n" + data.getTodayTable().size());
 
         return data;
     }

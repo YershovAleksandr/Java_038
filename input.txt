@@ -1,0 +1,8 @@
+3
+https://www.yandex.ru yesterday/yandex.html
+https://www.mail.ru yesterday/mail.html
+https://www.ngs.ru yesterday/ngs.html
+3
+https://www.yandex.ru today/ya.html
+https://www.mail.ru today/mail.html
+https://www.google.com today/google.html

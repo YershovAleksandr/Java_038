@@ -17,9 +17,14 @@ public class App {
     public static void main(String[] args) {
         Application application = new Application();
 
-        data = application.init(args);
+        try {
+            data = application.init(args);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
         result = application.process(data);
-        //application.sendMail(result);
+        application.sendMail(result);
     }
 /*
     private static void checkMail(String str){
