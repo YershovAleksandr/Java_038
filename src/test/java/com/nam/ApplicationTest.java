@@ -55,4 +55,16 @@ public class ApplicationTest {
         assertEquals(result.getChangedPages(), Arrays.asList());
         assertEquals(result.getAddedPages(), Arrays.asList("2"));
     }
+
+    @Test
+    public void NoModificationTest(){
+        data.getYesterdayTable().put("1", "1001");
+        data.getTodayTable().put("1", "1001");
+
+        application.process(data, result);
+
+        assertEquals(result.getRemovedPages(), Arrays.asList());
+        assertEquals(result.getChangedPages(), Arrays.asList());
+        assertEquals(result.getAddedPages(), Arrays.asList());
+    }
 }
