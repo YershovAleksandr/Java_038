@@ -3,10 +3,7 @@ package com.nam;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Properties;
@@ -14,32 +11,18 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Application {
-    //private Data data;
-    //private Result result;
+    private String mailto;
 
     public Application(){
     }
 
-    public Data init(String[] args) throws Exception{
+    public void setMailto(String mailto) {
+        this.mailto = mailto;
+    }
+
+    public Data init() throws Exception{
 
         Data data = new Data();
-
-        FileInputStream fis;
-        Properties prp = new Properties();
-
-        try{
-            fis = new FileInputStream("src/main/resources/config.properties");
-
-            prp.load(fis);
-
-            String str = prp.getProperty("app.email", "defa");
-            data.setEmail(str);
-
-            System.out.println("Email " + str);
-
-        } catch(IOException e){
-            e.printStackTrace();
-        }
 
         Scanner in = new Scanner(System.in);
 
@@ -97,16 +80,12 @@ public class Application {
     }
 
     public void sendMail(Result result){
-        System.out.println(result.toString());
+        System.out.println("Sending mail to: " + mailto + "\n" + result.toString());
 
-        String to = "alebed42@74.ru";
-        //String to = "asdasdasdasdas@dsfsdf";
-        //String to = "namstudionsk@gmail.com";
-        String from = "alebed42@74.ru";
+        String from = "softtest42@74.ru";
         String host = "smtp.yandex.ru";
 
         Properties properties = new Properties();
-
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.ssl.enable", "true");
         properties.put("mail.smtp.auth", "true");
@@ -115,7 +94,7 @@ public class Application {
         Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator(){
             @Override
             protected PasswordAuthentication getPasswordAuthentication(){
-                return new PasswordAuthentication("alebed42@74.ru", "ofsdabmh");
+                return new PasswordAuthentication(from, "softaria");
             }
         });
 
@@ -123,13 +102,11 @@ public class Application {
             MimeMessage message = new MimeMessage(session);
 
             message.setFrom(new InternetAddress(from));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailto));
             message.setSubject(LocalDate.now().toString());
             message.setText(result.toString());
 
             Transport.send(message);
-            System.out.println("Sent message successfully....");
-
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }

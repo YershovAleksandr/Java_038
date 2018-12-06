@@ -15,7 +15,6 @@ public class ApplicationTest {
 
     @Before
     public void setUp(){
-        System.out.println("before");
         data = new Data();
         //result = null;
         application = new Application();
