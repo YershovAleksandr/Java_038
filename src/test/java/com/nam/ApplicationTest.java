@@ -15,8 +15,9 @@ public class ApplicationTest {
 
     @Before
     public void setUp(){
+        System.out.println("before");
         data = new Data();
-        result = new Result();
+        //result = null;
         application = new Application();
     }
 
@@ -24,7 +25,7 @@ public class ApplicationTest {
     public void RemovedPagesTest(){
         data.getYesterdayTable().put("1", "1001");
 
-        application.process(data, result);
+        result = application.process(data);
 
         assertEquals(result.getRemovedPages(), Arrays.asList("1"));
         assertEquals(result.getChangedPages(), Arrays.asList());
@@ -36,7 +37,7 @@ public class ApplicationTest {
         data.getYesterdayTable().put("1", "1001");
         data.getTodayTable().put("1", "1002");
 
-        application.process(data, result);
+        result = application.process(data);
 
         assertEquals(result.getRemovedPages(), Arrays.asList());
         assertEquals(result.getChangedPages(), Arrays.asList("1"));
@@ -49,7 +50,7 @@ public class ApplicationTest {
         data.getTodayTable().put("1", "1001");
         data.getTodayTable().put("2", "1002");
 
-        application.process(data, result);
+        result = application.process(data);
 
         assertEquals(result.getRemovedPages(), Arrays.asList());
         assertEquals(result.getChangedPages(), Arrays.asList());
@@ -61,7 +62,7 @@ public class ApplicationTest {
         data.getYesterdayTable().put("1", "1001");
         data.getTodayTable().put("1", "1001");
 
-        application.process(data, result);
+        result = application.process(data);
 
         assertEquals(result.getRemovedPages(), Arrays.asList());
         assertEquals(result.getChangedPages(), Arrays.asList());

@@ -40,7 +40,9 @@ public class Application {
         return data;
     }
 
-    public void process(Data data, Result result){
+    public Result process(Data data){
+        Result result = new Result();
+
         Set<String> keys = data.getYesterdayTable().keySet();
 
         for (String key: keys){
@@ -63,6 +65,8 @@ public class Application {
                 }
             }
         }
+
+        return result;
     }
 
     public void sendMail(Result result){

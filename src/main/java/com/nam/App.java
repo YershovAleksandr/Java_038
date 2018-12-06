@@ -5,7 +5,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import java.util.Properties;
-import java.util.Random;
 
 /**
  * Hello world!
@@ -16,88 +15,13 @@ public class App {
     private static Result result;
 
     public static void main(String[] args) {
-        System.out.println("Hello World Softaria!");
-
-        Random rnd = new Random();
-        String str = "Fuck you!" + rnd.nextInt();
-
-        //sendMail(str);
-
-      //  checkMail(str);
-
-        //System.exit(0);
-
         Application application = new Application();
 
-
         data = application.init(args);
-
-        result = new Result();
-
-        application.process(data, result);
-
+        result = application.process(data);
         application.sendMail(result);
-
     }
-
-    private static void sendMail(String str){
-// Recipient's email ID needs to be mentioned.
-        String to = "alebed42@74.ru";
-
-        // Sender's email ID needs to be mentioned
-        String from = "alebed42@74.ru";
-
-        // Assuming you are sending email from localhost
-        String host = "smtp.yandex.ru";
-
-        int port = 465;
-
-        // Get system properties
-        Properties properties = new Properties();
-
-        properties.put("mail.smtp.host", host);
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.debug", "true");
-        //properties.put("mail.user", "alebede42@74.ru");
-        //properties.put("mail.password", "0fsdabmh");
-
-        // Get the default Session object.
-        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator(){
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication(){
-                return new PasswordAuthentication("alebed42@74.ru", "ofsdabmh");
-            }
-        });
-
-        try {
-            // Create a default MimeMessage object.
-            MimeMessage message = new MimeMessage(session);
-
-            // Set From: header field of the header.
-            message.setFrom(new InternetAddress(from));
-
-            // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-            // Set Subject: header field
-
-
-            message.setSubject(str);
-
-            // Now set the actual message
-            message.setText(str);
-
-            // Send message
-            Transport.send(message);
-            System.out.println("Sent message successfully....");
-
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
-        }
-
-    }
-
+/*
     private static void checkMail(String str){
         final String user = "alebed42@74.ru"; // имя пользователя
         final String pass = "ofsdabmh";    // пароль
@@ -138,5 +62,5 @@ public class App {
         }catch(Exception ex){
             ex.printStackTrace();
         }
-    }
+    }*/
 }
